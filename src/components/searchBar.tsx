@@ -35,7 +35,7 @@ export const SearchBar: React.FC<IsearchBarProps> = (props) => {
   return (
     <div
       id="searchbar"
-      className=" w-full grid col-span-3 pt-10 pb-14 px-40 gap-y-4  bg-gradient-to-b from-amber-900 rounded-b-3xl"
+      className=" w-full grid col-span-3 pt-10 pb-14 px-40 gap-y-4  bg-gradient-to-b from-cyan-900 rounded-b-3xl"
     >
       <h1 className="text-5xl font-bold text-gray-300 justify-self-center">
         Weather
@@ -55,7 +55,11 @@ export const SearchBar: React.FC<IsearchBarProps> = (props) => {
               <div
                 key={item.formatted}
                 onClick={() => {
-                  onResultClick({ geometry: item.geometry, name: item.name });
+                  onResultClick({
+                    geometry: item.geometry,
+                    name: item.name,
+                    formatted: item.formatted,
+                  });
                 }}
                 className="w-full py-3 px-4 text-lg text-gray-600 font-medium hover:bg-gray-300 hover:cursor-pointer rounded-lg"
               >

@@ -17,3 +17,18 @@ export const fetchWeatherData = async (
     return Promise.reject(error as AxiosError);
   }
 };
+
+// export const fetchWeatherDataWithName = async (
+//   searchKey: string
+// ): Promise<IweatherDataResponse> => {
+//   try {
+//     const response = await api.get(
+//       `/data/2.5/weather?q=${searchKey}&appid=&appid=5639f244600744ef8b0a77e131251c43`
+//     );
+
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error fetching weather:", error);
+//     return Promise.reject(error as AxiosError);
+//   }
+// };

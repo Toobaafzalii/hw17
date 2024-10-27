@@ -29,6 +29,7 @@ interface Igeometry {
 interface IselectedItem {
   geometry: Igeometry;
   name: string;
+  formatted: string;
 }
 
 interface IsearchBarProps {
@@ -67,4 +68,41 @@ interface IweatherDataResponse {
   visibility: number;
   weather: [{ id: number; main: string; description: string; icon: string }];
   wind: { speed: number; deg: number };
+}
+
+interface IcountryDataRespons {
+  name: {
+    common: string;
+    official: string;
+  };
+  tld: string[];
+  idd: {
+    root: string;
+    suffixes: [string];
+  };
+  capital: string[];
+  region: string;
+  subregion: string;
+  languages: {
+    key: string;
+  };
+  population: number;
+  timezones: string[];
+  flags: {
+    png: string;
+    svg: string;
+  };
+  capitalInfo: {
+    latlng: number[];
+  };
+}
+
+type IcountryData = IcountryDataRespons[];
+
+interface IcountryBoxProps {
+  country?: IcountryDataRespons;
+}
+
+interface IweatherBoxProps {
+  weatherData?: IweatherDataResponse;
 }

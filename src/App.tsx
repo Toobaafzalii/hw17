@@ -11,6 +11,7 @@ function App() {
       lng: "",
     },
     name: "",
+    formatted: "",
   });
 
   const onLocationSelect = (selectedItem: IselectedItem) => {
