@@ -1,7 +1,7 @@
 export const CountryBox: React.FC = () => {
   return (
-    <div className="px-4">
-      <div className="flex flex-col justify-between items-center px-8 py-4 bg-gradient-to-t from-gray-700 rounded-md ">
+    <div className="px-4 pb-6">
+      <div className=" w-full h-full flex flex-col justify-between items-center px-8 py-4 bg-gradient-to-t from-gray-700 rounded-md ">
         <div className="w-full bg-amber-900 border-2 border-amber-950 shadow-md rounded-xl text-xl font-semibold text-gray-300 text-center px-8 py-4">
           COUNTRY NAME
         </div>
