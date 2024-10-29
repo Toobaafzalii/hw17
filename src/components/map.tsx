@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TileLayer, Marker, Popup, useMapEvent } from "react-leaflet";
-export const Map: React.FC = () => {
+
+export const Map: React.FC<ImapProps> = (props) => {
   const [markerPosition, setMarkerPosition] = useState<ImapGeometry>({
     lat: 51.505,
-    lng: -0.09,
+    lng: -6.09,
   });
-  const map = useMapEvent("click", (a) => {
-    console.log(a);
-    setMarkerPosition(a.latlng);
+
+  const map = useMapEvent("click", (e) => {
+    setMarkerPosition(e.latlng);
+    props.onMapClick(e.latlng);
   });
+
+  useEffect(() => {
+    if (props.searchedGeometry?.lat) {
+      setMarkerPosition({
+        lat: Number(props.searchedGeometry.lat),
+        lng: Number(props.searchedGeometry.lng),
+      });
+      map.setView(
+        [
+          Number(props.searchedGeometry.lat),
+          Number(props.searchedGeometry.lng),
+        ],
+        map.getZoom()
+      );
+    }
+  }, [props.searchedGeometry]);
 
   return (
     <>

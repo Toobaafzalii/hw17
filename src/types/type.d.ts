@@ -112,3 +112,8 @@ interface ImapGeometry {
   lat: number;
   lng: number;
 }
+
+interface ImapProps {
+  onMapClick: (latlng: ImapGeometry) => void;
+  searchedGeometry?: Igeometry;
+}

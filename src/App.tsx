@@ -7,8 +7,8 @@ function App() {
   const queryClient = new QueryClient();
   const [selectedItem, setSelectedItem] = useState<IselectedItem>({
     geometry: {
-      lat: "",
-      lng: "",
+      lat: "51.505",
+      lng: "-6.09",
     },
     name: "",
     formatted: "",

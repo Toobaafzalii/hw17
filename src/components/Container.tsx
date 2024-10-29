@@ -58,17 +58,32 @@ export const Container: React.FC<IcontainerProps> = (props) => {
     }
   }, [props.item]);
 
+  const onMapClick = (latlng: ImapGeometry) => {
+    weatherData.mutate(
+      {
+        lat: latlng.lat.toString(),
+        lng: latlng.lng.toString(),
+      },
+      {
+        onSuccess(wData) {
+          setCityData(wData);
+          countriesData.mutate(wData.sys.country);
+        },
+      }
+    );
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:container mx-auto w-full gap-x-10 gap-y-4 px-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:container mx-auto w-full gap-x-3 md:gap-x-5 gap-y-1.5 px-2 md:px-10">
       <CountryBox country={countriesData?.data?.[0]} />
       <CityBox weatherData={cityData} />
       <div
         id="flag"
-        className="relative w-full h-88 my-8 mr-20 flex justify-center items-center text-center text-gray-500 text-xl font-semibold border-y-2 border-dashed border-cyan-900 rounded-xl "
+        className="relative w-full h-80 md:h-96 md:max-h-96 my-8 mr-20 flex justify-center items-center text-center text-gray-500 text-xl font-semibold border-y-2 border-dashed border-cyan-900 rounded-xl "
       >
         COUNTRY FLAG
         {countriesData.data && countriesData?.data?.length > 0 && (
-          <div className="absolute top-7 h-60">
+          <div className="absolute top-4 md:top-7 h-72 md:max-h-88">
             <img
               className="h-full"
               src={countriesData.data?.[0].flags.svg}
@@ -80,14 +95,20 @@ export const Container: React.FC<IcontainerProps> = (props) => {
       <CodeBox country={countriesData?.data?.[0]} />
       <div
         id="map"
-        className="w-full grid col-span-2 h-96 p-2 px-4 border-y-2 border-dashed border-cyan-900 rounded-xl"
+        className="w-full grid col-span-1 md:col-span-2 h-96 p-2 px-4 border-y-2 border-dashed border-cyan-900 rounded-xl"
       >
         <MapContainer
           center={[51.505, -0.09]}
           zoom={13}
           scrollWheelZoom={false}
         >
-          <Map />
+          <Map
+            onMapClick={onMapClick}
+            searchedGeometry={{
+              lat: String(cityData?.coord.lat ?? ""),
+              lng: String(cityData?.coord.lon ?? ""),
+            }}
+          />
         </MapContainer>
       </div>
     </div>

@@ -2,14 +2,14 @@ export const CityBox: React.FC<IweatherBoxProps> = (props) => {
   return (
     <div className=" px-4 pb-6">
       <div className=" w-full h-full flex flex-col justify-between items-center px-8 py-4 bg-gradient-to-t from-gray-700 rounded-md ">
-        <div className="w-full bg-cyan-900 border-2 border-cyan-950 shadow-md rounded-xl text-xl font-semibold text-gray-300 text-center px-8 py-4">
+        <div className="w-full h-full bg-cyan-900 border-2 border-cyan-950 shadow-md rounded-xl text-xl font-semibold text-gray-300 text-center px-8 py-4">
           CITY WEATHER REPORT
         </div>
-        <div className="w-full h-[65px]">
+        <div className="w-full h-full md:h-[65px]">
           {props.weatherData && (
             <img
-              className="w-[28%] md:w-[28%] sm:w-[24%] flex self-center mx-auto my-auto"
-              src={`https://openweathermap.org/img/w${props.weatherData?.weather[0].icon[2]}/${props.weatherData?.weather[0].icon}.png`}
+              className="w-[60%] md:w-[28%] sm:w-[24%] flex self-center mx-auto my-auto"
+              src={`https://openweathermap.org/img/w/${props.weatherData?.weather[0].icon}.png`}
               alt="weather-icon"
             />
           )}

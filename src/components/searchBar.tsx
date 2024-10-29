@@ -36,14 +36,14 @@ export const SearchBar: React.FC<IsearchBarProps> = (props) => {
   return (
     <div
       id="searchbar"
-      className="w-full grid col-span-3 pt-10 pb-14 px-40 gap-y-4  bg-gradient-to-b from-cyan-900 rounded-b-3xl"
+      className="w-full grid col-span-1 md:col-span-3 mx-auto md:mx-0 pt-10 pb-6 px-20 md:px-40 gap-y-4 bg-gradient-to-b from-cyan-900 rounded-b-3xl"
     >
-      <h1 className="text-5xl font-bold text-gray-300 justify-self-center">
+      <h1 className="text-5xl font-bold text-gray-300 justify-self-center mx-auto">
         Weather
       </h1>
       <input
         type="text"
-        className="relative bg-gray-300 self-center p-4 text-xl font-medium min-w-72 rounded-xl text-gray-700 placeholder-gray-500"
+        className="relative bg-gray-300 self-center p-4 mx-auto md:mx-0 text-xl font-medium md:min-w-72 rounded-xl text-gray-700 placeholder-gray-500"
         placeholder="Search for a country or city"
         value={inputValue}
         onChange={handleInputChange}
@@ -51,7 +51,7 @@ export const SearchBar: React.FC<IsearchBarProps> = (props) => {
 
       {searchResult && (
         <div className="relative -top-[14px]">
-          <div className="absolute top-0 w-full z-10 bg-gray-200 min-w-72 flex flex-col justify-start items-start gap-2 rounded-lg">
+          <div className="absolute top-0 w-full z-10 bg-gray-200 md:min-w-72 flex flex-col justify-start items-start gap-2 rounded-lg">
             {searchResult.map((item) => (
               <div
                 key={item.formatted}
