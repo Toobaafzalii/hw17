@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { TileLayer, Marker, Popup } from "react-leaflet";
-import { MapContainer } from "react-leaflet";
 import { CodeBox } from "./codeBox";
-import { CapitalBox } from "./capitalBox";
+import { CityBox } from "./cityBox";
 import { CountryBox } from "./countryBox";
+import { Map } from "./map";
 import { useMutation } from "react-query";
 import { fetchWeatherData } from "../api/weather.api";
 import { fetchCountryData } from "../api/country.api";
+import { MapContainer } from "react-leaflet";
 
 export const Container: React.FC<IcontainerProps> = (props) => {
-  const [capitalData, setCapitalData] = useState<IweatherDataResponse>();
+  const [cityData, setCityData] = useState<IweatherDataResponse>();
   const weatherData = useMutation({
     mutationKey: ["weather"],
+    mutationFn: (value: Igeometry) => fetchWeatherData(value),
+  });
+
+  const secondWeatherData = useMutation({
+    mutationKey: ["weather2"],
     mutationFn: (value: Igeometry) => fetchWeatherData(value),
   });
 
@@ -26,39 +31,37 @@ export const Container: React.FC<IcontainerProps> = (props) => {
   });
 
   useEffect(() => {
-    weatherData.mutate(props.item.geometry, {
-      onSuccess(data) {
-        setCapitalData(data);
-      },
-    });
-  }, [props.item]);
-
-  useEffect(() => {
-    if (weatherData.data?.sys.country) {
-      countriesData.mutate(weatherData.data?.sys.country, {
-        // onSuccess(data) {
-        //   if (props.item.formatted.includes(",")) return;
-        //   weatherData.mutate(
-        //     {
-        //       lat: data[0].capitalInfo.latlng[0].toString(),
-        //       lng: data[0].capitalInfo.latlng[1].toString(),
-        //     },
-        //     {
-        //       onSuccess(data) {
-        //         setCapitalData(data);
-        //         console.log("ok", capitalData);
-        //       },
-        //     }
-        //   );
-        // },
+    if (props.item.name) {
+      weatherData.mutate(props.item.geometry, {
+        onSuccess(weatherData) {
+          countriesData.mutate(weatherData.sys.country, {
+            onSuccess(data) {
+              if (!props.item.formatted.includes(",")) {
+                secondWeatherData.mutate(
+                  {
+                    lat: data[0].capitalInfo.latlng[0].toString(),
+                    lng: data[0].capitalInfo.latlng[1].toString(),
+                  },
+                  {
+                    onSuccess(data) {
+                      setCityData(data);
+                    },
+                  }
+                );
+              } else {
+                setCityData(weatherData);
+              }
+            },
+          });
+        },
       });
     }
-  }, [weatherData.data]);
+  }, [props.item]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-2 w-full gap-x-10 gap-y-4 px-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:container mx-auto w-full gap-x-10 gap-y-4 px-10">
       <CountryBox country={countriesData?.data?.[0]} />
-      <CapitalBox weatherData={weatherData.data} />
+      <CityBox weatherData={cityData} />
       <div
         id="flag"
         className="relative w-full h-88 my-8 mr-20 flex justify-center items-center text-center text-gray-500 text-xl font-semibold border-y-2 border-dashed border-cyan-900 rounded-xl "
@@ -84,15 +87,7 @@ export const Container: React.FC<IcontainerProps> = (props) => {
           zoom={13}
           scrollWheelZoom={false}
         >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker position={[51.505, -0.09]}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
+          <Map />
         </MapContainer>
       </div>
     </div>

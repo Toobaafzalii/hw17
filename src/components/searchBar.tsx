@@ -6,7 +6,7 @@ import { fetchLocations } from "../api/location.api";
 
 export const SearchBar: React.FC<IsearchBarProps> = (props) => {
   const [inputValue, setInputValue] = useState("");
-  const [debouncedValue] = useDebounce(inputValue, 1000);
+  const [debouncedValue] = useDebounce(inputValue, 100);
   const [searchResult, setSearchResult] = useState<Ilocation[] | undefined>([]);
 
   const locations = useMutation({
@@ -30,12 +30,13 @@ export const SearchBar: React.FC<IsearchBarProps> = (props) => {
   const onResultClick = (selectedItem: IselectedItem) => {
     props.onLocationSelect(selectedItem);
     setSearchResult(undefined);
+    setInputValue("");
   };
 
   return (
     <div
       id="searchbar"
-      className=" w-full grid col-span-3 pt-10 pb-14 px-40 gap-y-4  bg-gradient-to-b from-cyan-900 rounded-b-3xl"
+      className="w-full grid col-span-3 pt-10 pb-14 px-40 gap-y-4  bg-gradient-to-b from-cyan-900 rounded-b-3xl"
     >
       <h1 className="text-5xl font-bold text-gray-300 justify-self-center">
         Weather

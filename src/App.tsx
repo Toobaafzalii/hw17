@@ -20,8 +20,10 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SearchBar onLocationSelect={onLocationSelect} />
-      <Container item={selectedItem} />
+      <div className="w-full">
+        <SearchBar onLocationSelect={onLocationSelect} />
+        <Container item={selectedItem} />
+      </div>
     </QueryClientProvider>
   );
 }

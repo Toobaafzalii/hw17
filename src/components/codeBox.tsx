@@ -1,6 +1,6 @@
 export const CodeBox: React.FC<IcountryBoxProps> = (props) => {
-  const joinedCodeArray = props.country?.idd.suffixes.join(",");
-  const callingCode = props.country?.idd.root + "" + joinedCodeArray;
+  const callingCode =
+    props.country?.idd.root + "" + props.country?.idd.suffixes[0];
 
   return (
     <div className="px-4 pb-6">

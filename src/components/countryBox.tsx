@@ -1,6 +1,4 @@
 export const CountryBox: React.FC<IcountryBoxProps> = (props) => {
-  console.log(props);
-
   return (
     <div className="px-4 pb-6">
       <div className=" w-full h-full flex flex-col justify-between items-center px-8 py-4 bg-gradient-to-t from-gray-700 rounded-md ">
@@ -42,14 +40,14 @@ export const CountryBox: React.FC<IcountryBoxProps> = (props) => {
             Languages:{" "}
             <span className="text-gray-200">
               {Object.values(props?.country?.languages ?? {}).map(
-                (item) => item
+                (item) => ` ${item}`
               ) ?? " ---"}
             </span>
           </p>
           <p>
             Time Zone:{" "}
             <span className="text-gray-200">
-              {props.country?.timezones ?? " ---"}
+              {props.country?.timezones?.[0] ?? " ---"}
             </span>
           </p>
         </div>

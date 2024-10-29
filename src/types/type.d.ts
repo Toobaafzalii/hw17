@@ -49,6 +49,7 @@ interface IweatherDataResponse {
   id: number;
   main: {
     temp: number;
+    humidity: number;
     feels_like: number;
     temp_min: number;
     temp_max: number;
@@ -105,4 +106,9 @@ interface IcountryBoxProps {
 
 interface IweatherBoxProps {
   weatherData?: IweatherDataResponse;
+}
+
+interface ImapGeometry {
+  lat: number;
+  lng: number;
 }
